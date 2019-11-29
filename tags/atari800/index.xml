@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>atari800 on Mypalmike&#39;s Blog</title>
+    <link>http://mypalmike.github.io/tags/atari800/</link>
+    <description>Recent content in atari800 on Mypalmike&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 29 Nov 2019 10:20:01 +0000</lastBuildDate>
+    
+	<atom:link href="http://mypalmike.github.io/tags/atari800/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Peek6502</title>
+      <link>http://mypalmike.github.io/posts/atari-800-intro/</link>
+      <pubDate>Fri, 29 Nov 2019 10:20:01 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/posts/atari-800-intro/</guid>
+      <description>I recently started writing an emulator for the Atari 800 computer in the language Rust.
+The Atari 800 was my first computer as a child. I had begged and pleaded with my parents to get me a computer after being shown how to write simple BASIC programs on my elementary school&#39;s Apple 2. My family was of moderate means, so buying something with a total cost of over $1000 was not something taken lightly.</description>
+    </item>
+    
+  </channel>
+</rss>

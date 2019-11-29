@@ -1,1 +1,0 @@
-# mypalmike.github.io
