@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>skastic on Mypalmike&#39;s Blog</title>
+    <link>http://mypalmike.github.io/tags/skastic/</link>
+    <description>Recent content in skastic on Mypalmike&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 Aug 2017 22:58:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://mypalmike.github.io/tags/skastic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Skastic: An image-based esoteric programming language</title>
+      <link>http://mypalmike.github.io/posts/skastic-intro/</link>
+      <pubDate>Tue, 22 Aug 2017 22:58:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/posts/skastic-intro/</guid>
+      <description>I came across a post on slashdot recently about an esoteric programming language based on ASCII art. (https://developers.slashdot.org/story/17/08/13/2033239/new-asciidots-programming-language-uses-ascii-art-and-python). It&#39;s pretty novel and interesting, and in the comments section, people mentioned some related languages with similar characteristics which can be found on esolangs.org. I was intrigued by some other languages which use lines to show control or data flow, some of which are found in a list of two-dimensional languages https://esolangs.org/wiki/Category:Two-dimensional_languages. The overall visual appearance of https://esolangs.</description>
+    </item>
+    
+  </channel>
+</rss>

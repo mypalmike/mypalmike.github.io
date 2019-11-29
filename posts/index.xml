@@ -21,5 +21,34 @@
 The Atari 800 was my first computer as a child. I had begged and pleaded with my parents to get me a computer after being shown how to write simple BASIC programs on my elementary school&#39;s Apple 2. My family was of moderate means, so buying something with a total cost of over $1000 was not something taken lightly.</description>
     </item>
     
+    <item>
+      <title>LibGDX, Preferences, and Android</title>
+      <link>http://mypalmike.github.io/posts/libgdx-prefs-android/</link>
+      <pubDate>Sat, 02 Sep 2017 09:17:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/posts/libgdx-prefs-android/</guid>
+      <description>Another day of coding with LibGDX, another annoying Android issue.
+This time, it involves a Preferences object. I have a settings menu where the user can adjust things like sound effects volume, etc. There is a single Preferences object that lasts the entire lifetime of the game. In the settings menu, I read from and write to this object. And obviously I read the values elsewhere for the settings to take effect.</description>
+    </item>
+    
+    <item>
+      <title>Fixing sound effects issues in LibGDX on Android</title>
+      <link>http://mypalmike.github.io/posts/libgdx-sfx-issues/</link>
+      <pubDate>Wed, 30 Aug 2017 22:56:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/posts/libgdx-sfx-issues/</guid>
+      <description>Just a forewarning: this is not a definitive explanation for everything that can go wrong with your sound effects in LibGDX - just some information I learned while debugging some issues I ran into. I still have more questions than answers.
+Sound effects are often one of the last things you will implement in an independent game project. You&#39;ve got this nearly complete game that just needs some polish in the form of bleeps and bloops.</description>
+    </item>
+    
+    <item>
+      <title>Skastic: An image-based esoteric programming language</title>
+      <link>http://mypalmike.github.io/posts/skastic-intro/</link>
+      <pubDate>Tue, 22 Aug 2017 22:58:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/posts/skastic-intro/</guid>
+      <description>I came across a post on slashdot recently about an esoteric programming language based on ASCII art. (https://developers.slashdot.org/story/17/08/13/2033239/new-asciidots-programming-language-uses-ascii-art-and-python). It&#39;s pretty novel and interesting, and in the comments section, people mentioned some related languages with similar characteristics which can be found on esolangs.org. I was intrigued by some other languages which use lines to show control or data flow, some of which are found in a list of two-dimensional languages https://esolangs.org/wiki/Category:Two-dimensional_languages. The overall visual appearance of https://esolangs.</description>
+    </item>
+    
   </channel>
 </rss>

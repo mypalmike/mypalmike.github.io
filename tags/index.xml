@@ -20,5 +20,68 @@
       <description></description>
     </item>
     
+    <item>
+      <title>rust</title>
+      <link>http://mypalmike.github.io/tags/rust/</link>
+      <pubDate>Fri, 29 Nov 2019 10:20:01 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/tags/rust/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>android</title>
+      <link>http://mypalmike.github.io/tags/android/</link>
+      <pubDate>Sat, 02 Sep 2017 09:17:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/tags/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gamedev</title>
+      <link>http://mypalmike.github.io/tags/gamedev/</link>
+      <pubDate>Sat, 02 Sep 2017 09:17:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/tags/gamedev/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>java</title>
+      <link>http://mypalmike.github.io/tags/java/</link>
+      <pubDate>Sat, 02 Sep 2017 09:17:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>libgdx</title>
+      <link>http://mypalmike.github.io/tags/libgdx/</link>
+      <pubDate>Sat, 02 Sep 2017 09:17:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/tags/libgdx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lisp</title>
+      <link>http://mypalmike.github.io/tags/lisp/</link>
+      <pubDate>Tue, 22 Aug 2017 22:58:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/tags/lisp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>skastic</title>
+      <link>http://mypalmike.github.io/tags/skastic/</link>
+      <pubDate>Tue, 22 Aug 2017 22:58:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/tags/skastic/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

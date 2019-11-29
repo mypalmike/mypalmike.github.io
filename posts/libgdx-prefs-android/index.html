@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Mypalmike&#39;s Blog  | LibGDX, Preferences, and Android</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.60.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="LibGDX, Preferences, and Android" />
+<meta property="og:description" content="Another day of coding with LibGDX, another annoying Android issue.
+This time, it involves a Preferences object. I have a settings menu where the user can adjust things like sound effects volume, etc. There is a single Preferences object that lasts the entire lifetime of the game. In the settings menu, I read from and write to this object. And obviously I read the values elsewhere for the settings to take effect." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mypalmike.github.io/posts/libgdx-prefs-android/" />
+<meta property="article:published_time" content="2017-09-02T09:17:00+00:00" />
+<meta property="article:modified_time" content="2017-09-02T09:17:00+00:00" />
+<meta itemprop="name" content="LibGDX, Preferences, and Android">
+<meta itemprop="description" content="Another day of coding with LibGDX, another annoying Android issue.
+This time, it involves a Preferences object. I have a settings menu where the user can adjust things like sound effects volume, etc. There is a single Preferences object that lasts the entire lifetime of the game. In the settings menu, I read from and write to this object. And obviously I read the values elsewhere for the settings to take effect.">
+<meta itemprop="datePublished" content="2017-09-02T09:17:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-09-02T09:17:00&#43;00:00" />
+<meta itemprop="wordCount" content="410">
+
+
+
+<meta itemprop="keywords" content="libgdx,java,gamedev,android," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LibGDX, Preferences, and Android"/>
+<meta name="twitter:description" content="Another day of coding with LibGDX, another annoying Android issue.
+This time, it involves a Preferences object. I have a settings menu where the user can adjust things like sound effects volume, etc. There is a single Preferences object that lasts the entire lifetime of the game. In the settings menu, I read from and write to this object. And obviously I read the values elsewhere for the settings to take effect."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://mypalmike.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Mypalmike&#39;s Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/" title="Home page">
+              Home
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">LibGDX, Preferences, and Android</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2017-09-02T09:17:00Z">September 2, 2017</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Another day of coding with LibGDX, another annoying Android issue.</p>
+<p>This time, it involves a Preferences object. I have a settings menu where the user can adjust things like sound effects volume, etc. There is a single Preferences object that lasts the entire lifetime of the game. In the settings menu, I read from and write to this object. And obviously I read the values elsewhere for the settings to take effect.</p>
+<p>A Preferences object is a simple key/value store with a &ldquo;flush&rdquo; method for persistence. Great, I figure. I can write to this thing, read from it, and persist it when needed. So, my approach to the settings menu is for the widget callback to write values to the persistence object. I.e., when a slider is slid, the callback grabs the new value of the slider. It then assigns this value to the relevant key in the preferences object. Then, any runtime state that needs realtime updating (e.g. music volume) can pick up these changes in their normal processing by reading the preferences object. When the user exits the settings menu, the values are persisted with the flush() method.</p>
+<p>This approach works fine on desktop builds, but not on Android. Consider this minimal example:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">prefs<span style="color:#f92672">.</span><span style="color:#a6e22e">putFloat</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;foo&#34;</span><span style="color:#f92672">,</span> 5<span style="color:#f92672">.</span><span style="color:#a6e22e">0f</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+y <span style="color:#f92672">=</span> prefs<span style="color:#f92672">.</span><span style="color:#a6e22e">getFloat</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;foo&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+</code></pre></div><p>You might think the value of y should be 5.0f. On desktop builds, this is the case. But on Android, nope. It's whatever the value was last time it was loaded or flushed. Apparently, the Android implementation has separate memory regions for reading and writing which are not reconciled until flush().</p>
+<p>The quick and dirty fix is to flush after every prefs.putFoo() call.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">prefs<span style="color:#f92672">.</span><span style="color:#a6e22e">putFloat</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;foo&#34;</span><span style="color:#f92672">,</span> 5<span style="color:#f92672">.</span><span style="color:#a6e22e">0f</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+prefs<span style="color:#f92672">.</span><span style="color:#a6e22e">flush</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+y <span style="color:#f92672">=</span> prefs<span style="color:#f92672">.</span><span style="color:#a6e22e">getFloat</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;foo&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+</code></pre></div><p>(Of course in actual code, the prefs.getFloat() call is not going to be immediately after the flush, but later on in some section of code that needs the value of &ldquo;foo&rdquo;.)</p>
+<p>For the settings menu, this approach seems needlessly inefficient - the preferences are repeatedly written to storage while the slider is being slid.</p>
+<p>The other obvious approaches would seem to be:</p>
+<ol>
+<li>Push updates directly to the realtime components that need updating rather than letting them pick them up from the prefs object.</li>
+<li>Create a separate object that is authoritative for this data, and use the Preferences object solely as a means of persisting the data.</li>
+</ol>
+<p>The former is easier to implement given a small number of settings, but the latter seems architecturally cleaner and more easily maintained once it's working.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/libgdx" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">libgdx</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/java" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">java</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/gamedev" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gamedev</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/android" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">android</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+  <div class="bg-light-gray pa3 nested-list-reset nested-copy-line-height nested-links">
+    <p class="f5 b mb3">Related</p>
+    <ul class="pa0 list">
+	   
+	     <li  class="mb2">
+          <a href="/posts/libgdx-sfx-issues/">Fixing sound effects issues in LibGDX on Android</a>
+        </li>
+	    
+    </ul>
+</div>
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://mypalmike.github.io/" >
+    &copy; 2019 Mypalmike&#39;s Blog
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

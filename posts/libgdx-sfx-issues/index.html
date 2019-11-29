@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Mypalmike&#39;s Blog  | Fixing sound effects issues in LibGDX on Android</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.60.0" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="/dist/css/app.d98f2eb6bcd1eaedb7edf166bd16af26.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+    
+
+    
+    
+    <meta property="og:title" content="Fixing sound effects issues in LibGDX on Android" />
+<meta property="og:description" content="Just a forewarning: this is not a definitive explanation for everything that can go wrong with your sound effects in LibGDX - just some information I learned while debugging some issues I ran into. I still have more questions than answers.
+Sound effects are often one of the last things you will implement in an independent game project. You&#39;ve got this nearly complete game that just needs some polish in the form of bleeps and bloops." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://mypalmike.github.io/posts/libgdx-sfx-issues/" />
+<meta property="article:published_time" content="2017-08-30T22:56:00+00:00" />
+<meta property="article:modified_time" content="2017-08-30T22:56:00+00:00" />
+<meta itemprop="name" content="Fixing sound effects issues in LibGDX on Android">
+<meta itemprop="description" content="Just a forewarning: this is not a definitive explanation for everything that can go wrong with your sound effects in LibGDX - just some information I learned while debugging some issues I ran into. I still have more questions than answers.
+Sound effects are often one of the last things you will implement in an independent game project. You&#39;ve got this nearly complete game that just needs some polish in the form of bleeps and bloops.">
+<meta itemprop="datePublished" content="2017-08-30T22:56:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-08-30T22:56:00&#43;00:00" />
+<meta itemprop="wordCount" content="880">
+
+
+
+<meta itemprop="keywords" content="libgdx,java,gamedev,android," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Fixing sound effects issues in LibGDX on Android"/>
+<meta name="twitter:description" content="Just a forewarning: this is not a definitive explanation for everything that can go wrong with your sound effects in LibGDX - just some information I learned while debugging some issues I ran into. I still have more questions than answers.
+Sound effects are often one of the last things you will implement in an independent game project. You&#39;ve got this nearly complete game that just needs some polish in the form of bleeps and bloops."/>
+
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="http://mypalmike.github.io/" class="f3 fw2 hover-white no-underline white-90 dib">
+      Mypalmike&#39;s Blog
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/" title="Home page">
+              Home
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="/posts/" title="Posts page">
+              Posts
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+
+    <header class="mt4 w-100">
+      <p class="f6 b helvetica tracked">
+          
+        POSTS
+      </p>
+      <h1 class="f1 athelas mb1">Fixing sound effects issues in LibGDX on Android</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2017-08-30T22:56:00Z">August 30, 2017</time>
+      
+      
+    </header>
+
+    <section class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>Just a forewarning: this is not a definitive explanation for everything that can go wrong with your sound effects in LibGDX - just some information I learned while debugging some issues I ran into. I still have more questions than answers.</p>
+<p>Sound effects are often one of the last things you will implement in an independent game project. You've got this nearly complete game that just needs some polish in the form of bleeps and bloops. So it can be frustrating when the audio API doesn't work as you expect. In LibGDX, the audio API is quite simple. You load your sounds. You play your sounds. What could go wrong?</p>
+<p>It turns out that things can go wrong. These are computers, after all, which means they have every intention of causing frustration for developers.</p>
+<p>In my case, I had 5 sound effects files and a music file. The sound effects files had been made with Logic Pro X and exported (&ldquo;bounced&rdquo; in Logic terminology) as mp3 files. I had code like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Game</span> <span style="color:#66d9ef">extends</span> ApplicationAdapter <span style="color:#f92672">{</span>
+  <span style="color:#66d9ef">private</span> Sound bleepSound<span style="color:#f92672">;</span>
+  <span style="color:#66d9ef">private</span> Sound bloopSound<span style="color:#f92672">;</span>
+
+  <span style="color:#a6e22e">@Override</span>
+  <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">create</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    bleepSound <span style="color:#f92672">=</span> Gdx<span style="color:#f92672">.</span><span style="color:#a6e22e">audio</span><span style="color:#f92672">.</span><span style="color:#a6e22e">newMusic</span><span style="color:#f92672">(</span>Gdx<span style="color:#f92672">.</span><span style="color:#a6e22e">files</span><span style="color:#f92672">.</span><span style="color:#a6e22e">internal</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;sounds/bleepsound.mp3&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    bloopSound <span style="color:#f92672">=</span> Gdx<span style="color:#f92672">.</span><span style="color:#a6e22e">audio</span><span style="color:#f92672">.</span><span style="color:#a6e22e">newMusic</span><span style="color:#f92672">(</span>Gdx<span style="color:#f92672">.</span><span style="color:#a6e22e">files</span><span style="color:#f92672">.</span><span style="color:#a6e22e">internal</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;sounds/bloopsound.mp3&#34;</span><span style="color:#f92672">)</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+  <span style="color:#f92672">}</span>
+
+  <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">someEventHappened</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    bleepSound<span style="color:#f92672">.</span><span style="color:#a6e22e">play</span><span style="color:#f92672">(</span><span style="color:#f92672">)</span><span style="color:#f92672">;</span>
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>  <span style="color:#f92672">}</span>
+
+  <span style="color:#75715e">// etc.
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><p>Straightforward enough. And when I ran the game on my Android phone, it made bleep and bloop sounds. For a while. Until it only made bleep sounds. Eventually, when a bloop sound was supposed to be played, it would log something like this instead of making sweet bloops:</p>
+<pre><code>AudioFlinger could not create track. status: -12 
+Error creating AudioTrack
+</code></pre><p>Of course, I google this text, and it leads to lots of questions on stackoverflow and other forums. The -12 code seems to indicate some sort of memory issue. There were lots of mentions of Android's underlying SoundPool API having some sort of 1MB limit. But my largest sound file was 120KB, and all the others were under 50KB.</p>
+<p>Some forums recommended compressing the mp3s further. This did not help, although it did seem to make the problem occur later (bloops would happen for longer before they stopped).</p>
+<p>Some forums recommended that you can fix this by converting your sound files to .ogg format. This did not help.</p>
+<p>Some forums recommended using an AssetManager for loading data. Using AssetManager is a good way to organize asset loading, and for loading things asynchronously, but it did not fix the problem for me.</p>
+<p>Some forums mentioned 44.1 vs 48 kHz sampling. I tried converting to 48 kHz. This didn't fix the problem.</p>
+<p>Since none of these things fixed the problem, I had to wander blindly for a while and guess at things. There were some questions in mind. In particular, is the 1MB limit for compressed files or uncompressed files. In a sense, that question is really this: do the files get uncompressed once into memory or do they get uncompressed each time they play? Also, is this limit per-sound or per-SoundPool (something which the LibGDX gives no direct control over)?</p>
+<p>Wandering in the dark&hellip; I re-bounced the files from Logic Pro as uncompressed .aif files. One of them was slightly over 1MB. But this wasn't the only file that failed to play. The others were all exactly the same size: 354KB, and one of these was regularly failing to play. The fact that they were the same size seemed odd. My hunch was that it had to do with how Logic Pro, which is mostly used for music production (but which has lots of cool, customizable synths which are great for making bleeps and bloops), bounces audio. Sure enough, when I opened the .aif files in Audacity, they all had long tails of silence at the end. Since Logic Pro thinks of sound in terms of measures of music, and it wants to make sure to render every last possible sample of your song, it errs on the side of caution by emitting lots of dead space at the end of a file.</p>
+<p>So I trimmed these files and saved out as .wav files. File sizes were 37KB, 180KB, 212KB, 224KB, and 789KB. The longest one is a &ldquo;game over&rdquo; sound, which is obviously played just once during normal gameplay. So I changed how I access that file by using the Music API.</p>
+<p>And things worked reliably.</p>
+<p>My guess is that the mp3/ogg files get uncompressed into memory, and that the 1MB limit is on individual uncompressed sounds. It's possible that other format conversions take place which also affect how these files actually end up laid out in memory. It's possible that they are all converted into stereo samples at the device's native audio frequency so that the lowest level API can play them by just shoveling the samples into the mixer with virtually no additional processing (just attenuation for volume and panning). I really don't know.</p>
+<p>Because I have only a few sound effects in my game, I still am not sure whether the 1MB limitation is on individual sounds or on groupings of sounds. I'd like to believe that it is on individual sounds.</p>
+<p>I may update this blog post as I learn more. If I have some free time, I may find myself reading the relevant LibGDX and AOSP code for answers.</p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="/tags/libgdx" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">libgdx</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/java" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">java</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/gamedev" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">gamedev</a>
+   </li>
+  
+   <li class="list">
+     <a href="/tags/android" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">android</a>
+   </li>
+  
+</ul>
+<div class="mt6">
+      
+      
+      </div>
+    </section>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="http://mypalmike.github.io/" >
+    &copy; 2019 Mypalmike&#39;s Blog
+  </a>
+    <div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

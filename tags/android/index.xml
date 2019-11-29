@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>android on Mypalmike&#39;s Blog</title>
+    <link>http://mypalmike.github.io/tags/android/</link>
+    <description>Recent content in android on Mypalmike&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 02 Sep 2017 09:17:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://mypalmike.github.io/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>LibGDX, Preferences, and Android</title>
+      <link>http://mypalmike.github.io/posts/libgdx-prefs-android/</link>
+      <pubDate>Sat, 02 Sep 2017 09:17:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/posts/libgdx-prefs-android/</guid>
+      <description>Another day of coding with LibGDX, another annoying Android issue.
+This time, it involves a Preferences object. I have a settings menu where the user can adjust things like sound effects volume, etc. There is a single Preferences object that lasts the entire lifetime of the game. In the settings menu, I read from and write to this object. And obviously I read the values elsewhere for the settings to take effect.</description>
+    </item>
+    
+    <item>
+      <title>Fixing sound effects issues in LibGDX on Android</title>
+      <link>http://mypalmike.github.io/posts/libgdx-sfx-issues/</link>
+      <pubDate>Wed, 30 Aug 2017 22:56:00 +0000</pubDate>
+      
+      <guid>http://mypalmike.github.io/posts/libgdx-sfx-issues/</guid>
+      <description>Just a forewarning: this is not a definitive explanation for everything that can go wrong with your sound effects in LibGDX - just some information I learned while debugging some issues I ran into. I still have more questions than answers.
+Sound effects are often one of the last things you will implement in an independent game project. You&#39;ve got this nearly complete game that just needs some polish in the form of bleeps and bloops.</description>
+    </item>
+    
+  </channel>
+</rss>
